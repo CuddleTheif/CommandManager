@@ -2,3 +2,9 @@ main: com.cuddletheif.commandmanager.CommandManager
 name: CommandManager
 version: 0.1
 api-version: 1.18
+author: CuddleTheif
+commands:
+ cmdManager:
+   aliases: commandManager
+   description: "Commands for the Plugin Command Manager"
+   usage: "That is not a command, did you mean /cmdManager reload"

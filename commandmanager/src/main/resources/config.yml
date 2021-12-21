@@ -1,0 +1,54 @@
+
+commands:
+  adminkit:
+    name: 'kit|kits'
+    permission: 'customcrates.admin'
+    disabled: true
+    disable-sub: false
+    hidden: false
+    hide-sub: true
+    new-command: 'crate virtualcrates'
+    subcommands:
+      list:
+        name: 'list'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crate virtualcrates'
+  kit:
+    name: 'kit|kits'
+    disabled: true
+    disable-sub: false
+    hidden: false
+    hide-sub: true
+    new-command: 'crates'
+    subcommands:
+      list:
+        name: 'list'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crates'
+      claim:
+        name: 'claim'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crate open Claim'
+      slimefun:
+        name: 'slimefun'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crate open Slimefun'
+      tools:
+        name: 'tools|tool'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crate open Tools'
+      daily:
+        name: 'daily'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crate open Daily'
+      better-tools:
+        name: 'better_tools'
+        disabled: true
+        disabled-sub: false
+        new-command: 'crate open Better_Tools'
