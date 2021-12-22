@@ -29,8 +29,8 @@ public class CommandManager extends JavaPlugin
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 
         // Check if reload command
-        if(args.length==1 && args[0]=="reload"){
-
+        if(args.length==1 && args[0].trim().equals("reload")){
+            
             // Reload the config file from disk
             this.reloadConfig();
             this.saveDefaultConfig();
@@ -40,7 +40,7 @@ public class CommandManager extends JavaPlugin
             commandListener.reload(config);
 
             // Let user know reloaded config file and return success
-            sender.sendMessage("Reloading Config file");
+            sender.sendMessage("Reloaded Config file");
             return true;
         }
         return false;
@@ -49,7 +49,7 @@ public class CommandManager extends JavaPlugin
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args){
         var commands = new ArrayList<String>();
-        if(args.length<1)
+        if(args.length<1 || (args.length==1 && "reload".startsWith(args[0].trim())))
             commands.add("reload");
         return commands;
     }

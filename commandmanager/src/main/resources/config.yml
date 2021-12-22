@@ -6,7 +6,6 @@ commands:
     disabled: true
     disable-sub: false
     hidden: false
-    hide-sub: true
     new-command: 'crate virtualcrates'
     subcommands:
       list:
