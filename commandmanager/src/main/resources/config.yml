@@ -4,50 +4,60 @@ commands:
     name: 'kit|kits'
     permission: 'customcrates.admin'
     disabled: true
-    disable-sub: false
-    hidden: false
-    new-command: 'crate virtualcrates'
+    new-commands: 
+    - 'crate virtualcrates'
     subcommands:
       list:
         name: 'list'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crate virtualcrates'
+        new-commands: 
+        - 'crate virtualcrates'
   kit:
     name: 'kit|kits'
     disabled: true
-    disable-sub: false
-    hidden: false
     hide-sub: true
-    new-command: 'crates'
+    new-commands: 
+    - 'crates'
     subcommands:
       list:
         name: 'list'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crates'
+        new-commands: 
+        - 'crates'
       claim:
         name: 'claim'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crate open Claim'
+        server: true
+        new-commands: 
+        - 'crate open Claim %sender%'
       slimefun:
         name: 'slimefun'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crate open Slimefun'
+        server: true
+        new-commands: 
+        - 'crate open Slimefun %sender%'
       tools:
         name: 'tools|tool'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crate open Tools'
+        server: true
+        new-commands: 
+        - 'crate open Tools %sender%'
       daily:
         name: 'daily'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crate open Daily'
+        server: true
+        new-commands: 
+        - 'crate open Daily %sender%'
       better-tools:
         name: 'better_tools'
+        hidden: false
         disabled: true
-        disabled-sub: false
-        new-command: 'crate open Better_Tools'
+        server: true
+        new-commands: 
+        - 'crate open Better_Tools %sender%'
