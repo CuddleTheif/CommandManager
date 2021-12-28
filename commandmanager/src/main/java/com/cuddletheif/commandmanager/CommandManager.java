@@ -48,7 +48,7 @@ public class CommandManager extends JavaPlugin
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args){
-        var commands = new ArrayList<String>();
+        List<String> commands = new ArrayList<String>();
         if(args.length<1 || (args.length==1 && "reload".startsWith(args[0].trim())))
             commands.add("reload");
         return commands;

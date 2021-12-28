@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,7 +43,7 @@ public class CommandListener implements Listener{
             commands = new CommandData[cmdKeys.size()];
             var i = 0;
             for(String cmdKey : cmdKeys)
-                commands[i++] = new CommandData(cmdSection.getConfigurationSection(cmdKey));
+                commands[i++] = new CommandData(cmdSection.getConfigurationSection(cmdKey), true);
         }
 
     }
@@ -71,6 +69,7 @@ public class CommandListener implements Listener{
                 for(String toRemove : removes)
                     cmdNames.remove(toRemove);
             }
+
         }
 
     }

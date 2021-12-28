@@ -1,11 +1,14 @@
 package com.cuddletheif.commandmanager;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -54,13 +57,16 @@ public class CommandData implements Listener{
     // The subcommands of this command to add to tab completion
     private CommandData[] subCommands;
 
+    // Description of the command used when registering it
+    private String description;
     
     /**
      * Gets and stores the command data from a config section
      * 
      * @param section Section holding all the data of the command
+     * @param topCommand If this command is a top command and should be registered
      */
-    public CommandData(ConfigurationSection section){
+    public CommandData(ConfigurationSection section, boolean topCommand){
         
         // Get all the data for this command
         this.names = section.getString("name").split("[|]");
@@ -76,8 +82,12 @@ public class CommandData implements Listener{
         this.hideSub = section.getBoolean("hide-sub");
         this.unhideSub = section.getBoolean("unhide-sub");
         this.server = section.getBoolean("server");
-        if(section.contains("new-commands"))
+        this.description = section.getString("description");
+        if(section.contains("new-commands")){
+            if(topCommand && this.disabled)
+                this.registerCommand();
             this.newCommands = section.getStringList("new-commands").toArray(new String[0]);
+        }
         else
             this.newCommands = new String[0];
         
@@ -96,6 +106,48 @@ public class CommandData implements Listener{
 
     }
 
+    /**
+     * Registers the command to bukkit for the tab list
+     */
+    private void registerCommand(){
+
+        // Check if the command already exists and if it does just override it
+        PluginCommand command = Bukkit.getPluginCommand(this.getName());
+        if(command!=null){
+            if(this.description!=null)
+                command.setDescription(this.description);
+            if(this.permission!=null)
+                command.setPermission(this.permission);
+            if(this.names.length>1){
+                ArrayList<String> aliases = new ArrayList<>();
+                for(int i=1;i<names.length;i++)
+                    aliases.add(names[i]);
+                command.setAliases(aliases);
+            }
+            else
+                command.setAliases(new ArrayList<>());
+            command.setExecutor(new CustomExecutor());
+        }
+        // If the command does not exist just try to add it
+        else{
+
+            try{   
+                
+                Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+
+                bukkitCommandMap.setAccessible(true);
+                CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+
+                ArrayList<String> aliases = new ArrayList<>();
+                for(int i=1;i<names.length;i++)
+                    aliases.add(names[i]);
+                commandMap.register("seen", new CustomCommand(this.getName(), this.description, this.permission, aliases));
+                
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {}
+            
+        }
+    }
+
      /**
      * Gets and stores the command data from a config section and can override the data based on the parent
      * 
@@ -105,7 +157,7 @@ public class CommandData implements Listener{
     private CommandData(ConfigurationSection section, CommandData parent){
         
         // Call the normal constructor
-        this(section);
+        this(section, false);
 
         // Override the given values
         if(parent.hideSub && !section.contains("hidden"))
@@ -284,7 +336,6 @@ public class CommandData implements Listener{
                 
                 // Replace any placeholders
                 String finalCommand = command.replaceAll("%sender%", sender.getName());
-                Bukkit.getPluginManager().getPlugin("CommandManager").getLogger().info(this.getName()+":"+command+":"+finalCommand);
 
                 // Run the command (as the sender or server)
                 Bukkit.getServer().dispatchCommand((this.server ? Bukkit.getConsoleSender() : sender), finalCommand);
