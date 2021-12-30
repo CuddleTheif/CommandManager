@@ -1,63 +1,19 @@
 
+# All the settings for each command
 commands:
-  adminkit:
-    name: 'kit|kits'
-    permission: 'customcrates.admin'
+  get:
+    name: 'get'
     disabled: true
-    new-commands: 
-    - 'crate virtualcrates'
     subcommands:
-      list:
-        name: 'list'
+      sword:
+        name: 'stick'
         hidden: false
         disabled: true
         new-commands: 
-        - 'crate virtualcrates'
+        - 'give %player% stick 1'
   kit:
     name: 'kit|kits'
     disabled: true
     hide-sub: true
-    new-commands: 
-    - 'crates'
-    subcommands:
-      list:
-        name: 'list'
-        hidden: false
-        disabled: true
-        new-commands: 
-        - 'crates'
-      claim:
-        name: 'claim'
-        hidden: false
-        disabled: true
-        server: true
-        new-commands: 
-        - 'crate open Claim %sender%'
-      slimefun:
-        name: 'slimefun'
-        hidden: false
-        disabled: true
-        server: true
-        new-commands: 
-        - 'crate open Slimefun %sender%'
-      tools:
-        name: 'tools|tool'
-        hidden: false
-        disabled: true
-        server: true
-        new-commands: 
-        - 'crate open Tools %sender%'
-      daily:
-        name: 'daily'
-        hidden: false
-        disabled: true
-        server: true
-        new-commands: 
-        - 'crate open Daily %sender%'
-      better-tools:
-        name: 'better_tools'
-        hidden: false
-        disabled: true
-        server: true
-        new-commands: 
-        - 'crate open Better_Tools %sender%'
+    hidden: true
+    disable-sub: true
